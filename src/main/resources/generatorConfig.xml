@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!-- 引用外部properties配置文件的参数值，使用${}取值 -->
+    <properties resource="./config/generatorConfig.properties" />
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <!--去掉生成的日期行注释-->
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接地址账号密码-->
+        <jdbcConnection driverClass="${driverClass}"
+                        connectionURL="${connectionURL}"
+                        userId="${userId}"
+                        password="${password}">
+        <!--8.x以上的Connection版本使用，避免生成sys, information_schema, performance_schema等系统表的代码-->
+         <property name="nullCatalogMeansCurrent" value="true" />
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <!--对数据库列DECIMAL或NUMERIC类型不强制转为BigDecimal，视数字长度而定-->
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--生成Model类存放位置-->
+        <javaModelGenerator targetPackage="${javaModelGenerator.targetPackage}" targetProject="${javaModelGenerator.targetProject}">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--生成xml映射文件存放位置-->
+        <sqlMapGenerator targetPackage="${sqlMapGenerator.targetPackage}"  targetProject="${sqlMapGenerator.targetProject}">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!--生成Dao类存放位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${javaClientGenerator.targetPackage}"  targetProject="${javaClientGenerator.targetProject}">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!-- <table tableName="tableName" domainObjectName="domainName" >
+            ##若该表有自增列则使用该配置. 当调用mapper插入一条数据到数据库之, 能从当前这个Entity中获取到插入之后的Id:
+            <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+            ##自动生成时忽略表中的某一列：
+            <ignoreColumn column="col1" />
+            ##用于重命名某列的属性名或类型用于映射指定类型：
+            <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />
+        </table> -->
+
+        <table tableName="user" domainObjectName="UserDO" enableSelectByExample="false" enableDeleteByExample="false"
+               enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+        </table>
+
+    </context>
+</generatorConfiguration>

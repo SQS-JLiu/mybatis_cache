@@ -1,0 +1,12 @@
+使用建议：
+ 一级缓存：放心用, 没有脏读,但一级缓存基于一个session内, 用处不大
+
+ 二级缓存: 小心谨慎使用, 或直接不用, 易于脏读
+
+ 比较项        一级缓存               二级缓存
+命中原则   statementId, 查询参数, 分页参数, sql脚本, 环境
+缓存生成       select            select+close/commit
+缓存销毁  close/rollback/commit    update(flushCache=true),
+        /update/clearCache        flushInterval
+缓存失效         无                eviction+size
+ 脏读           无               单线程、多线程、多实例

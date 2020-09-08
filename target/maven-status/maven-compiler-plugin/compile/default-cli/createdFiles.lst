@@ -1,0 +1,8 @@
+org\example\TestSecond2Dao.class
+org\example\redis\RedisCache.class
+org\example\TestSecondDao.class
+org\example\TestDao.class
+org\example\TestSecond2RedisDao.class
+org\example\App.class
+org\example\resource\mapping\gen\UserDOMapper.class
+org\example\resource\domain\gen\UserDO.class

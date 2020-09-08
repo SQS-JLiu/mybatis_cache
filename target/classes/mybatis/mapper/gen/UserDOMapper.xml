@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.resource.mapping.gen.UserDOMapper">
+  <!--开启二级缓存-->
+  <!--  <cache/>-->
+
+  <!--  集成redis的缓存配置-->
+  <cache type="org.example.redis.RedisCache">
+    <property name="host" value="127.0.0.1"/>
+    <property name="port" value="6379"/>
+  </cache>
+
+  <resultMap id="BaseResultMap" type="org.example.resource.domain.gen.UserDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="last_date" jdbcType="DATE" property="lastDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, password, create_date, last_date
+  </sql>
+
+  <select id="selectById" parameterType="int" resultType="org.example.resource.domain.gen.UserDO">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="org.example.resource.domain.gen.UserDO" useGeneratedKeys="true">
+    insert into user (username, password, create_date, 
+      last_date)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+      #{lastDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="org.example.resource.domain.gen.UserDO" useGeneratedKeys="true">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="lastDate != null">
+        last_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="lastDate != null">
+        #{lastDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.example.resource.domain.gen.UserDO">
+    update user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="lastDate != null">
+        last_date = #{lastDate,jdbcType=DATE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.example.resource.domain.gen.UserDO">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      last_date = #{lastDate,jdbcType=DATE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
